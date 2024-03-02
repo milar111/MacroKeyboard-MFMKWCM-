@@ -1,3 +1,5 @@
+#The project isn't finished I'm currently working on it!
+
 # MacroKeyboard-MFMKWCM-
 End term project in Micro/Circuit Python. TUES
 # Description
