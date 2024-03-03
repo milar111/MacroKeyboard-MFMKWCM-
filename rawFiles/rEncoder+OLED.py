@@ -77,32 +77,40 @@ def send_key(key):
     cc.send(key)
     time.sleep(0.1)
 
+oled_update_time = time.monotonic()
+encoder_check_time = time.monotonic()
+
 while True:
-    temperature = round(microcontroller.cpu.temperature - 5, 1) 
-    temperature_string = f"{temperature}°C"
-    temperature_text.text = "Temp:" + temperature_string
+    if time.monotonic() - oled_update_time >= 0.1: 
+        temperature = round(microcontroller.cpu.temperature - 5, 1) 
+        temperature_string = f"{temperature}°C"
+        temperature_text.text = "Temp:" + temperature_string
 
-    current_time = rtc_r.datetime
-    time_string = "{:02d}:{:02d}:{:02d}".format(current_time.tm_hour, current_time.tm_min, current_time.tm_sec)
-    time_text.text = "Time:" + time_string
+        current_time = rtc_r.datetime
+        time_string = "{:02d}:{:02d}:{:02d}".format(current_time.tm_hour, current_time.tm_min, current_time.tm_sec)
+        time_text.text = "Time:" + time_string
 
-    date_string = "{:02d}/{:02d}/{:02d}".format(current_time.tm_mday, current_time.tm_mon, current_time.tm_year % 100)
-    date_text.text = "Date:" + date_string
+        date_string = "{:02d}/{:02d}/{:02d}".format(current_time.tm_mday, current_time.tm_mon, current_time.tm_year % 100)
+        date_text.text = "Date:" + date_string
 
-    icon_grid[0] = pointer
-    pointer = (pointer + 1) % FRAMES
+        icon_grid[0] = pointer
+        pointer = (pointer + 1) % FRAMES
 
-    if not s1_button.value:
-        send_key(ConsumerControlCode.VOLUME_DECREMENT)
-        while not s1_button.value:
-            pass  
-    if not s2_button.value:
-        send_key(ConsumerControlCode.VOLUME_INCREMENT)
-        while not s2_button.value:
-            pass  
-    if not key_button.value:
-        send_key(ConsumerControlCode.MUTE)
-        while not key_button.value:
-            pass  
-    time.sleep(0.01)  
+        oled_update_time = time.monotonic()
+
+    if time.monotonic() - encoder_check_time >= 0.01: 
+        if not s1_button.value:
+            send_key(ConsumerControlCode.VOLUME_DECREMENT)
+            while not s1_button.value:
+                pass  
+        if not s2_button.value:
+            send_key(ConsumerControlCode.VOLUME_INCREMENT)
+            while not s2_button.value:
+                pass  
+        if not key_button.value:
+            send_key(ConsumerControlCode.MUTE)
+            while not key_button.value:
+                pass  
+
+        encoder_check_time = time.monotonic()
 
