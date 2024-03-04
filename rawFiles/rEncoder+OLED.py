@@ -57,7 +57,7 @@ pointer = 0
 
 S1_PIN = board.GP15
 S2_PIN = board.GP14
-KEY_PIN = board.GP12
+KEY_PIN = board.GP13
 
 s1_button = digitalio.DigitalInOut(S1_PIN)
 s1_button.direction = digitalio.Direction.INPUT
