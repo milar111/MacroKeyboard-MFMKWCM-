@@ -18,7 +18,6 @@ for col in cols:
     col.direction = digitalio.Direction.INPUT
     col.pull = digitalio.Pull.UP
 
-# Define keymap
 keymap = [
     [Keycode.ONE, Keycode.TWO, Keycode.THREE],
     [Keycode.FOUR, Keycode.FIVE, Keycode.SIX],
