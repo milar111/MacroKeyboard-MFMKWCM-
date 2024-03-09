@@ -33,7 +33,6 @@ def scan_keyboard():
         for j in range(3):
             cols[j].direction = digitalio.Direction.OUTPUT
             cols[j].value = True
-            time.sleep(0.01)
             if rows[i].value:
                 if not key_pressed.get((i, j), False):
                     key_pressed[(i, j)] = True
