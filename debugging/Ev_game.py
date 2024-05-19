@@ -174,7 +174,7 @@ while True:
     
     key = scan_keyboard()
 
-    if key:
+    if key and not dino_game_active:
         if key != last_key:
             kbd.send(key)
             last_key = key
@@ -273,4 +273,3 @@ while True:
 
     display.show(splash)
     time.sleep(0.01)
-
