@@ -6,6 +6,7 @@ from adafruit_hid.keyboard import Keyboard
 from adafruit_hid.keycode import Keycode
 from adafruit_hid.consumer_control import ConsumerControl
 from adafruit_hid.consumer_control_code import ConsumerControlCode
+from adafruit_hid.keyboard_layout_us import KeyboardLayoutUS  # Add this import
 import adafruit_displayio_ssd1306
 from adafruit_display_text import label
 import rtc
@@ -40,6 +41,7 @@ keymap = [
 
 #USB HID keyboard
 kbd = Keyboard(usb_hid.devices)
+layout = KeyboardLayoutUS(kbd)  #Initialize the keyboard layout
 
 encoder_pins = [board.GP15, board.GP14]
 button_pin = board.GP13
@@ -85,8 +87,7 @@ def change_volume(direction):
         cc.send(ConsumerControlCode.VOLUME_INCREMENT)
     else:
         cc.send(ConsumerControlCode.VOLUME_DECREMENT)
-        
-        
+
 IMAGE_FILE = "pacman.bmp"
 SPRITE_SIZE = (32, 32)
 FRAMES = 28
@@ -173,6 +174,54 @@ while True:
     current_time = time.monotonic()
     
     key = scan_keyboard()
+    
+    if key == Keycode.ONE:
+        kbd.send(Keycode.WINDOWS, Keycode.R)
+        time.sleep(.1)
+        layout.write("Code")
+        kbd.send(Keycode.ENTER)
+    elif key == Keycode.TWO:
+        kbd.send(Keycode.WINDOWS, Keycode.R)
+        time.sleep(.1)
+        layout.write("https://github.com/milar111")
+        kbd.send(Keycode.ENTER)
+    elif key == Keycode.THREE:
+        kbd.send(Keycode.WINDOWS, Keycode.R)
+        time.sleep(.1)
+        layout.write("https://stackoverflow.com/")
+        kbd.send(Keycode.ENTER)
+    elif key == Keycode.FOUR:
+        kbd.send(Keycode.WINDOWS, Keycode.R)
+        time.sleep(.1)
+        layout.write("notepad++")
+        kbd.send(Keycode.ENTER)
+    elif key == Keycode.FIVE:
+        kbd.send(Keycode.WINDOWS, Keycode.R)
+        time.sleep(.1)
+        layout.write("https://chatgpt.com/?oai-dm=1	")
+        kbd.send(Keycode.ENTER)
+    elif key == Keycode.SIX:
+        kbd.send(Keycode.WINDOWS, Keycode.R)
+        time.sleep(.1)
+        layout.write("https://www.youtube.com/")
+        kbd.send(Keycode.ENTER)
+    elif key == Keycode.SEVEN:
+        kbd.send(Keycode.WINDOWS, Keycode.R)
+        time.sleep(.1)
+        layout.write("https://www.wikipedia.org/")
+        kbd.send(Keycode.ENTER)
+    elif key == Keycode.EIGHT:
+        kbd.send(Keycode.WINDOWS, Keycode.R)
+        time.sleep(.1)
+        layout.write("https://www.amazon.com/")
+        kbd.send(Keycode.ENTER)
+    elif key == Keycode.NINE:
+        kbd.send(Keycode.WINDOWS, Keycode.R)
+        time.sleep(.1)
+        layout.write("https://www.linkedin.com/")
+        kbd.send(Keycode.ENTER)
+#    elif key:
+#        kbd.send(key)
 
     if key and not dino_game_active:
         if key != last_key:
@@ -273,3 +322,4 @@ while True:
 
     display.show(splash)
     time.sleep(0.01)
+
