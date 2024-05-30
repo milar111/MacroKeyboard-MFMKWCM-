@@ -21,7 +21,7 @@ from adafruit_display_shapes.rect import Rect
 row_pins = [board.GP4, board.GP5, board.GP6]
 col_pins = [board.GP9, board.GP10, board.GP11]
 
-#rows and columns
+# rows and columns
 rows = [digitalio.DigitalInOut(pin) for pin in row_pins]
 for row in rows:
     row.direction = digitalio.Direction.INPUT
@@ -32,16 +32,16 @@ for col in cols:
     col.direction = digitalio.Direction.INPUT
     col.pull = digitalio.Pull.UP
 
-#keymap
+# keymap
 keymap = [
     [Keycode.ONE, Keycode.TWO, Keycode.THREE],
     [Keycode.FOUR, Keycode.FIVE, Keycode.SIX],
     [Keycode.SEVEN, Keycode.EIGHT, Keycode.NINE]
 ]
 
-#USB HID keyboard
+# USB HID keyboard
 kbd = Keyboard(usb_hid.devices)
-layout = KeyboardLayoutUS(kbd)  #Initialize the keyboard layout
+layout = KeyboardLayoutUS(kbd)  # Initialize the keyboard layout
 
 encoder_pins = [board.GP15, board.GP14]
 button_pin = board.GP13
@@ -62,7 +62,7 @@ button.pull = digitalio.Pull.UP
 cc = ConsumerControl(usb_hid.devices)
 
 INITIAL_DELAY = 0.5  # Delay before repeating chars
-REPEAT_DELAY = 0.1   # Delay between charS
+REPEAT_DELAY = 0.1   # Delay between chars
 REPEAT_RATE = 10     # Number of chars per second
 
 last_key = None
@@ -99,31 +99,31 @@ displayio.release_displays()
 
 sda, scl = board.GP16, board.GP17
 i2c = busio.I2C(scl, sda)
-display_bus = displayio.I2CDisplay(i2c, device_address = 0x3C)
-display = adafruit_displayio_ssd1306.SSD1306(display_bus, width = 128, height = 32)
+display_bus = displayio.I2CDisplay(i2c, device_address=0x3C)
+display = adafruit_displayio_ssd1306.SSD1306(display_bus, width=128, height=32)
 
 splash = displayio.Group()
 display.show(splash)
 
-temperature_text = label.Label(terminalio.FONT, text = "Temp: 0°C", color = 0xFFFFFF) 
+temperature_text = label.Label(terminalio.FONT, text="Temp: 0°C", color=0xFFFFFF) 
 temperature_text.x = 0
 temperature_text.y = 25 
 splash.append(temperature_text)
 
-time_text = label.Label(terminalio.FONT, text = "00:00:00", color = 0xFFFFFF) 
+time_text = label.Label(terminalio.FONT, text="00:00:00", color=0xFFFFFF) 
 time_text.x = 0
 time_text.y = 5  
 splash.append(time_text)
 
-date_text = label.Label(terminalio.FONT, text = "01/01/2000", color = 0xFFFFFF) 
+date_text = label.Label(terminalio.FONT, text="01/01/2000", color=0xFFFFFF) 
 date_text.x = 0
 date_text.y = 15 
 splash.append(date_text)
 
-icon_bit, icon_pal = adafruit_imageload.load(IMAGE_FILE, bitmap = displayio.Bitmap, palette = displayio.Palette)
+icon_bit, icon_pal = adafruit_imageload.load(IMAGE_FILE, bitmap=displayio.Bitmap, palette=displayio.Palette)
 invert_colors(icon_pal)
 
-icon_grid = displayio.TileGrid(icon_bit, pixel_shader = icon_pal, width = 1, height = 1, tile_height = SPRITE_SIZE[1], tile_width = SPRITE_SIZE[0], default_tile = 0, x = 90, y = 0)
+icon_grid = displayio.TileGrid(icon_bit, pixel_shader=icon_pal, width=1, height=1, tile_height=SPRITE_SIZE[1], tile_width=SPRITE_SIZE[0], default_tile=0, x=90, y=0)
 splash.append(icon_grid)
 
 rtc_r = rtc.RTC()
@@ -137,9 +137,9 @@ FRAME_INTERVAL = 0.1
 
 # Dino vars
 dino_game_active = False
-dino = Rect(10, 24, 8, 8, fill = 0xFFFFFF)
-obstacle = Rect(120, 24, 8, 8, fill = 0xFFFFFF)
-score_label = label.Label(terminalio.FONT, text = "Score: 0", color = 0xFFFFFF, x = 5, y = 5)
+dino = Rect(10, 24, 8, 8, fill=0xFFFFFF)
+obstacle = Rect(120, 24, 8, 8, fill=0xFFFFFF)
+score_label = label.Label(terminalio.FONT, text="Score: 0", color=0xFFFFFF, x=5, y=5)
 dino_y_velocity = 0
 dino_jump = -5
 gravity = 0.3
@@ -175,65 +175,70 @@ while True:
     
     key = scan_keyboard()
     
-    if key == Keycode.ONE:
-        kbd.send(Keycode.WINDOWS, Keycode.R)
-        time.sleep(.1)
-        layout.write("Code")
-        kbd.send(Keycode.ENTER)
-    elif key == Keycode.TWO:
-        kbd.send(Keycode.WINDOWS, Keycode.R)
-        time.sleep(.1)
-        layout.write("https://github.com/milar111")
-        kbd.send(Keycode.ENTER)
-    elif key == Keycode.THREE:
-        kbd.send(Keycode.WINDOWS, Keycode.R)
-        time.sleep(.1)
-        layout.write("https://stackoverflow.com/")
-        kbd.send(Keycode.ENTER)
-    elif key == Keycode.FOUR:
-        kbd.send(Keycode.WINDOWS, Keycode.R)
-        time.sleep(.1)
-        layout.write("notepad++")
-        kbd.send(Keycode.ENTER)
-    elif key == Keycode.FIVE:
-        kbd.send(Keycode.WINDOWS, Keycode.R)
-        time.sleep(.1)
-        layout.write("https://chatgpt.com/?oai-dm=1	")
-        kbd.send(Keycode.ENTER)
-    elif key == Keycode.SIX:
-        kbd.send(Keycode.WINDOWS, Keycode.R)
-        time.sleep(.1)
-        layout.write("https://www.youtube.com/")
-        kbd.send(Keycode.ENTER)
-    elif key == Keycode.SEVEN:
-        kbd.send(Keycode.WINDOWS, Keycode.R)
-        time.sleep(.1)
-        layout.write("https://www.wikipedia.org/")
-        kbd.send(Keycode.ENTER)
-    elif key == Keycode.EIGHT:
-        kbd.send(Keycode.WINDOWS, Keycode.R)
-        time.sleep(.1)
-        layout.write("https://www.amazon.com/")
-        kbd.send(Keycode.ENTER)
-    elif key == Keycode.NINE:
-        kbd.send(Keycode.WINDOWS, Keycode.R)
-        time.sleep(.1)
-        layout.write("https://www.linkedin.com/")
-        kbd.send(Keycode.ENTER)
-#    elif key:
-#        kbd.send(key)
-
-    if key and not dino_game_active:
-        if key != last_key:
+    if not dino_game_active:
+        if key == Keycode.ONE:
+            kbd.send(Keycode.WINDOWS, Keycode.R)
+            time.sleep(.1)
+            layout.write("Code")
+            kbd.send(Keycode.ENTER)
+        elif key == Keycode.TWO:
+            kbd.send(Keycode.WINDOWS, Keycode.R)
+            time.sleep(.1)
+            layout.write("https://github.com/milar111")
+            kbd.send(Keycode.ENTER)
+        elif key == Keycode.THREE:
+            kbd.send(Keycode.WINDOWS, Keycode.R)
+            time.sleep(.1)
+            layout.write("https://stackoverflow.com/")
+            kbd.send(Keycode.ENTER)
+        elif key == Keycode.FOUR:
+            kbd.send(Keycode.WINDOWS, Keycode.R)
+            time.sleep(.1)
+            layout.write("notepad++")
+            kbd.send(Keycode.ENTER)
+        elif key == Keycode.FIVE:
+            kbd.send(Keycode.WINDOWS, Keycode.R)
+            time.sleep(.1)
+            layout.write("https://chatgpt.com/?oai-dm=1")
+            kbd.send(Keycode.ENTER)
+        elif key == Keycode.SIX:
+            kbd.send(Keycode.WINDOWS, Keycode.R)
+            time.sleep(.1)
+            layout.write("https://www.youtube.com/")
+            kbd.send(Keycode.ENTER)
+        elif key == Keycode.SEVEN:
+            kbd.send(Keycode.WINDOWS, Keycode.R)
+            time.sleep(.1)
+            layout.write("https://www.wikipedia.org/")
+            kbd.send(Keycode.ENTER)
+        elif key == Keycode.EIGHT:
+            kbd.send(Keycode.WINDOWS, Keycode.R)
+            time.sleep(.1)
+            layout.write("https://www.amazon.com/")
+            kbd.send(Keycode.ENTER)
+        elif key == Keycode.NINE:
+            kbd.send(Keycode.WINDOWS, Keycode.R)
+            time.sleep(.1)
+            layout.write("https://www.linkedin.com/")
+            kbd.send(Keycode.ENTER)
+        elif key:
             kbd.send(key)
-            last_key = key
-            last_key_time = current_time
+
+        if key:
+            if key != last_key:
+                kbd.send(key)
+                last_key = key
+                last_key_time = current_time
+            else:
+                if current_time - last_key_time >= INITIAL_DELAY:
+                    if (current_time - last_key_time - INITIAL_DELAY) % (1 / REPEAT_RATE) < REPEAT_DELAY:
+                        kbd.send(key)
         else:
-            if current_time - last_key_time >= INITIAL_DELAY:
-                if (current_time - last_key_time - INITIAL_DELAY) % (1 / REPEAT_RATE) < REPEAT_DELAY:
-                    kbd.send(key)
+            last_key = None
     else:
-        last_key = None
+        if key and not is_jumping:
+            dino_y_velocity = dino_jump
+            is_jumping = True
 
     a_state = pin_a.value
     b_state = pin_b.value
