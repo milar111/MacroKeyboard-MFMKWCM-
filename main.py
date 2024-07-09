@@ -127,7 +127,7 @@ icon_grid = displayio.TileGrid(icon_bit, pixel_shader=icon_pal, width=1, height=
 splash.append(icon_grid)
 
 rtc_r = rtc.RTC()
-pointer = 0     
+# pointer = 0     
 
 oled_update_time = time.monotonic()
 encoder_check_time = time.monotonic()
@@ -224,17 +224,17 @@ while True:
         elif key:
             kbd.send(key)
 
-        if key:
-            if key != last_key:
-                kbd.send(key)
-                last_key = key
-                last_key_time = current_time
-            else:
-                if current_time - last_key_time >= INITIAL_DELAY:
-                    if (current_time - last_key_time - INITIAL_DELAY) % (1 / REPEAT_RATE) < REPEAT_DELAY:
-                        kbd.send(key)
-        else:
-            last_key = None
+        # if key:
+        #     if key != last_key:
+        #         kbd.send(key)
+        #         last_key = key
+        #         last_key_time = current_time
+        #     else:
+        #         if current_time - last_key_time >= INITIAL_DELAY:
+        #             if (current_time - last_key_time - INITIAL_DELAY) % (1 / REPEAT_RATE) < REPEAT_DELAY:
+        #                 kbd.send(key)
+        # else:
+        #     last_key = None
     else:
         if key and not is_jumping:
             dino_y_velocity = dino_jump
