@@ -61,6 +61,29 @@ This project combines a USB HID keyboard and an OLED display to create a versati
 
 This project demonstrates a versatile way to combine input devices and displays to create an interactive and multifunctional tool. Enjoy experimenting and expanding its capabilities!
 
+## Pin Connections
+
+### Keypad
+- Row Pins: 
+  - `GP4`
+  - `GP5`
+  - `GP6`
+- Column Pins:
+  - `GP9`
+  - `GP10`
+  - `GP11`
+
+### OLED Display
+- I2C Connections:
+  - `SDA`: `GP16`
+  - `SCL`: `GP17`
+
+### Rotary Encoder
+- Encoder Pins:
+  - `A`: `GP15`
+  - `B`: `GP14`
+- Button Pin: 
+  - `GP13`
 
 ## Images
 ![image](https://github.com/user-attachments/assets/ac6ef4c2-e951-485e-95fb-2e33af029d0c)
